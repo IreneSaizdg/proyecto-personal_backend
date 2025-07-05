@@ -1,5 +1,4 @@
-
-
+// QUERIES: recursos
 const resourceQueries = {
     // 1. Crear recurso
     insertResource: `
@@ -52,13 +51,14 @@ const resourceQueries = {
         ORDER BY date DESC;
     `,
 
-    // 7. Buscar recursos por tag o tag similar
+    // 7. Buscar recursos por tag o título similar
     findByTagOrTitle: `
         SELECT * 
         FROM resources
         WHERE EXISTS (
             SELECT 1 FROM unnest(tags) AS t WHERE t ILIKE $1
         )
+        OR title ILIKE $1
         ORDER BY date DESC;
     `,
 
@@ -71,6 +71,5 @@ const resourceQueries = {
         ORDER BY r.date DESC;
     `,
 };
-
 
 module.exports = resourceQueries;

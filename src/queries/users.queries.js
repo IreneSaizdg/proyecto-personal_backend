@@ -1,5 +1,5 @@
+// QUERIES: usuarios
 const userQueries = {
-    
     // 1. Obtener todos los usuarios y sus datos
     getAllUsers: `
         SELECT user_id, name, email, role, privileges
@@ -7,14 +7,14 @@ const userQueries = {
         ORDER BY user_id ASC;
     `,
 
-    // 2. Obtener usuario por id
+    // 2. Obtener usuario por ID
     getUserById: `
         SELECT user_id, name, email, role, privileges
         FROM users
         WHERE user_id = $1;
     `,
 
-    // 3. Actualizar usuario por id
+    // 3. Actualizar usuario por ID
     updateUserById: `
         UPDATE users
         SET
@@ -26,14 +26,12 @@ const userQueries = {
         RETURNING user_id, name, email, role, privileges;
     `,
 
-
-    // 4. Borrar usuario por id
+    // 3. Borrar usuario por ID
     deleteUserById: `
         DELETE FROM users
         WHERE user_id = $1
         RETURNING *;
     `,
-};
-
+    };
 
 module.exports = userQueries;
