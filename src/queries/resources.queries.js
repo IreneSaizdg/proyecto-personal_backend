@@ -72,4 +72,5 @@ const resourceQueries = {
     `,
 };
 
+
 module.exports = resourceQueries;
