@@ -64,7 +64,6 @@ async function createResource({ user_id, tags, image, title, description, links,
 
 // 6. Editar un recurso por ID
 async function updateResourceById({ tags, image, title, description, links, private: isPrivate, resource_id }) {
-  
   const values = [tags, image, title, description, links, isPrivate, resource_id];
   const result = await dbQuery(updateById, values);
   return result.rows[0] || null;

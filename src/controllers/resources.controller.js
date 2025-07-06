@@ -1,15 +1,15 @@
 // IMPORT
 const {
-  createResource,
-  updateResourceById,
-  deleteResourceById,
-  getAllResources,
   getResourceById,
+  getAllResources,
   getResourcesByUserId,
   getPublicResources,
-  searchResources,
-  getResourcesByTag
+  getResourcesByTag,
+  createResource,
+  updateResourceById,
+  deleteResourceById
 } = require('../models/resource.model');
+
 
 
 // CONTROLLER: 1. Obtener todos los recursos
@@ -70,7 +70,7 @@ const searchResourcesByTagController = async (req, res) => {
 
 // CONTROLLER: 5. Crear nuevo recurso
 const createResourceController = async (req, res) => {
-   try {
+  try {
     const newResource = await createResource(req.body);
     res.status(201).json(newResource);
 

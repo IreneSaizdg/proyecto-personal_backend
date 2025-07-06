@@ -1,46 +1,53 @@
-const db = require('../utils/dbConnection.util');
-const queries = require('../queries/users.queries');
+// IMPORTS
+const dbConnection = require('../utils/dbConnection.util');
+const { dbQuery } = require('../utils/dbQuery.util');
+const userQueries = require('../queries/users.queries')
 
-// Obtener un usuario por ID (por ejemplo, para perfil)
-async function getUserById(userId) {
-    const { rows } = await db.query(queries.getUserById, [userId]);
-    return rows[0];
+
+// 1. Crear Usuario
+async function createUser({ name, email, password, role = "user", privileges = null }) {
+  const values = [ name, email, password, role, privileges ];
+  const result = await dbQuery(userQueries.insertUser, values);
+  return result.rows[0]; //Devuelve el recurso recién creado
 }
 
-// Obtener todos los usuarios (admin)
+
+// 2. Ver todos los usuarios (admin)
 async function getAllUsers() {
-    const { rows } = await db.query(queries.getAllUsers);
+    const { rows } = await dbConnection.query(userQueries.getAllUsers);
     return rows;
 }
 
-// Actualizar usuario
-async function updateUserById({ name, email, role, privileges, user_id }) {
-  const { rows } = await db.query(queries.updateUserById, [
-    name,
-    email,
-    role,
-    privileges,
-    user_id,
-  ]);
-  return rows[0];
-}
 
-// Eliminar un usuario por ID (admin)
+// 3. Eliminar un usuario por ID 
 async function deleteUserById(userId) {
-    const { rows } = await db.query(queries.deleteUserById, [userId]);
+    const { rows } = await dbConnection.query(userQueries.deleteUserById, [userId]);
     return rows[0];
 }
 
-// Registrar un nuevo usuario
-async function createUser({ uid, displayName, email, photoURL }) {
-    const { rows } = await db.query(queries.createUser, [uid, displayName, email, photoURL]);
+
+// 4. Ver usuario por ID
+async function getUserById(userId) {
+    const { rows } = await dbConnection.query(userQueries.getUserById, [userId]);
     return rows[0];
 }
 
+
+// 5. Actualizar usuario por ID
+async function updateUserById({ name, email, password, role = "user", privileges = null, user_id }) {
+  const values = [name, email, password, role, privileges, user_id];
+  const result = await dbQuery(userQueries.updateUserById, values);
+  return result.rows[0] || null;
+}
+
+
+
+
+// EXPORTS
 module.exports = {
-getUserById,
-getAllUsers,
-updateUserById,
-deleteUserById,
-createUser
-};
+  createUser,
+  getUserById,
+  getAllUsers,
+  updateUserById,
+  deleteUserById,
+}
