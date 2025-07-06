@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 // Controladores
-const usersController = require('../controllers/users.controller');
+const usersController = require('../controllers/auth.controller');
 
 // RUTAS DE AUTENTICACIÓN (Firebase)
 // POST /api/v1/auth/register

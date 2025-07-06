@@ -1,6 +1,6 @@
 // IMPORTS
 //Importa la configuración del pool de conexiones
-const pool = require('./DBconnection.util');
+const pool = require('./dbConnection.util');
 
 
 

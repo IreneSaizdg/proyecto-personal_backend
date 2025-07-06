@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const usersController = require('../controllers/users.controller');
-const { checkRole } = require('../middlewares/auth.middleware'); //NO EXISTE AÚN
+const { checkRole } = require('../middlewares/checkRole'); //NO EXISTE AÚN
 
 
 // Ver y actualizar perfil del usuario (autenticado)

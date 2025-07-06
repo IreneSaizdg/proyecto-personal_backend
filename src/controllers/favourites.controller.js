@@ -1,11 +1,10 @@
 // IMPORTS
 const {
   addFavourite,
-  deleteFavouriteById,
   deleteFavouriteByUserAndResource,
   getFavouritesByUserId,
   isFavourite,
-} = require("../models/favourites.model");
+} = require("../models/favourite.model");
 
 
 
