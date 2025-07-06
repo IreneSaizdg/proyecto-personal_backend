@@ -13,6 +13,18 @@ async function getAllUsers() {
     return rows;
 }
 
+// Actualizar usuario
+async function updateUserById({ name, email, role, privileges, user_id }) {
+  const { rows } = await db.query(queries.updateUserById, [
+    name,
+    email,
+    role,
+    privileges,
+    user_id,
+  ]);
+  return rows[0];
+}
+
 // Eliminar un usuario por ID (admin)
 async function deleteUserById(userId) {
     const { rows } = await db.query(queries.deleteUserById, [userId]);
@@ -28,6 +40,7 @@ async function createUser({ uid, displayName, email, photoURL }) {
 module.exports = {
 getUserById,
 getAllUsers,
+updateUserById,
 deleteUserById,
 createUser
 };

@@ -3,7 +3,8 @@ const {
   getAllUsers,
   getUserById,
   createUser,
-  deleteUserById,
+  updateUserById,
+  deleteUserById
 } = require("../models/user.model");
 
 

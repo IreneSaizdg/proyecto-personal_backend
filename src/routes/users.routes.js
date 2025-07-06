@@ -1,9 +1,11 @@
+// IMPORTS
 const express = require('express');
 const router = express.Router();
 const usersController = require('../controllers/users.controller');
 const { checkRole } = require('../middlewares/checkRole'); //NO EXISTE AÚN
 
 
+// ROUTES
 // Ver y actualizar perfil del usuario (autenticado)
 router.get('/profile', usersController.getUser);
 router.put('/profile', usersController.putUser);
@@ -12,4 +14,7 @@ router.put('/profile', usersController.putUser);
 router.get('/', checkRole('admin'), usersController.getUsers);
 router.delete('/:id', checkRole('admin'), usersController.deleteUser);
 
+
+
+// EXPORTS
 module.exports = router;

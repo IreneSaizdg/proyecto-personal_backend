@@ -1,6 +1,41 @@
 // QUERIES: recursos
 const resourceQueries = {
-    // 1. Crear recurso
+    // QUERIE: 1. Obtener todos los recursos
+    getAll: `
+        SELECT * 
+        FROM resources 
+        ORDER BY date DESC;
+    `,
+
+    // QUERIE: 2. Obtener recursos públicos
+    findPublic: `
+        SELECT * 
+        FROM resources 
+        WHERE private = FALSE 
+        ORDER BY date DESC;
+    `,
+
+    // QUERIE: 3. Obtener recursos por ID de usuario
+    findByUserId: `
+        SELECT * 
+        FROM resources 
+        WHERE user_id = $1 
+        ORDER BY date DESC;
+    `,
+
+    // QUERIE: 4. Buscar recursos por texto en tag
+    findByTag: `
+        SELECT * 
+        FROM resources
+        WHERE EXISTS (
+            SELECT 1 
+            FROM unnest(tags) AS t 
+            WHERE t ILIKE $1
+        )
+        ORDER BY date DESC;
+    `,
+
+    // QUERIE: 5. Crear recurso
     insertResource: `
         INSERT INTO resources 
         (user_id, tags, image, title, description, links, private)
@@ -8,7 +43,7 @@ const resourceQueries = {
         RETURNING *;
     `,
 
-    // 2. Editar recurso por ID
+    // QUERIE: 6. Editar recurso por ID
     updateById: `
         UPDATE resources
         SET tags = $1,
@@ -21,55 +56,15 @@ const resourceQueries = {
         RETURNING *;
     `,
 
-    // 3. Eliminar recurso por ID
+    // QUERIE: 7. Eliminar recurso por ID
     deleteById: `
         DELETE FROM resources 
         WHERE resource_id = $1 
         RETURNING *;
     `,
-
-    // 4. Obtener todos los recursos
-    getAll: `
-        SELECT * 
-        FROM resources 
-        ORDER BY date DESC;
-    `,
-
-    // 5. Obtener recursos por usuario
-    findByUserId: `
-        SELECT * 
-        FROM resources 
-        WHERE user_id = $1 
-        ORDER BY date DESC;
-    `,
-
-    // 6. Obtener recursos públicos
-    findPublic: `
-        SELECT * 
-        FROM resources 
-        WHERE private = FALSE 
-        ORDER BY date DESC;
-    `,
-
-    // 7. Buscar recursos por tag o título similar
-    findByTagOrTitle: `
-        SELECT * 
-        FROM resources
-        WHERE EXISTS (
-            SELECT 1 FROM unnest(tags) AS t WHERE t ILIKE $1
-        )
-        OR title ILIKE $1
-        ORDER BY date DESC;
-    `,
-
-    // 8. Obtener recursos favoritos de un usuario
-    findFavouritesByUserId: `
-        SELECT r.*
-        FROM resources r
-        JOIN favourites f ON r.resource_id = f.resource_id
-        WHERE f.user_id = $1
-        ORDER BY r.date DESC;
-    `,
 };
 
+
+
+// EXPORTS
 module.exports = resourceQueries;
