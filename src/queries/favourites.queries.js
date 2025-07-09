@@ -1,19 +1,12 @@
 const favouriteQueries = {
     // 1. Añadir un favorito (relacionar user y resource)
-    addFavourite: `
+    insertFavourite: `
         INSERT INTO favourites (user_id, resource_id)
         VALUES ($1, $2)
         RETURNING *;
     `,
 
-    // 2. Eliminar un favorito por user_id y resource_id
-    deleteFavouriteByUserAndResource: `
-        DELETE FROM favourites
-        WHERE user_id = $1 AND resource_id = $2
-        RETURNING *;
-    `,
-
-    // 3. Obtener todos los favoritos de un usuario
+    // 2. Obtener todos los favoritos de un usuario
     getFavouritesByUserId: `
         SELECT r.*
         FROM resources r
@@ -22,8 +15,15 @@ const favouriteQueries = {
         ORDER BY r.date DESC;
     `,
 
+    // 3. Eliminar un favorito por user_id y resource_id
+    deleteFavourite: `
+        DELETE FROM favourites
+        WHERE user_id = $1 AND resource_id = $2
+        RETURNING *;
+    `,
+
     // 4. Verificar si un recurso está en favoritos de un usuario (para evitar duplicados)
-    isFavourite: `
+    getFavourite: `
         SELECT 1
         FROM favourites
         WHERE user_id = $1 AND resource_id = $2
@@ -32,4 +32,4 @@ const favouriteQueries = {
 };
 
 
-module.exports = favouriteQueries;
+module.exports = favouriteQueries

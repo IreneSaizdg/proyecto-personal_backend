@@ -2,7 +2,7 @@
 const {
   addFavourite,
   deleteFavouriteByUserAndResource,
-  getFavouritesByUserId,
+  getFavouritesByUser,
   isFavourite,
 } = require("../models/favourite.model");
 
@@ -10,35 +10,51 @@ const {
 
 // CONTROLLER: 1. Añadir un favorito (user_id + resource_id)
 const addFavouriteController = async (req, res) => {
-  const { user_id, resource_id } = req.body;
-
   try {
-    const alreadyExists = await isFavourite(user_id, resource_id);
+    const user_id = Number(req.user?.user_id); // Asumiendo que usas auth con JWT
+    const { resource_id } = req.body;
 
-    if (alreadyExists) {
-      return res.status(409).json({
-        success: false,
-        message: "Este recurso ya está en favoritos",
-      });
+    if (isNaN(user_id) || isNaN(resource_id)) {
+      return res.status(400).json({ ok: false, error: 'Datos inválidos' });
     }
 
-    const newFavourite = await addFavourite(user_id, resource_id);
+    const alreadyFav = await isFavourite({ user_id, resource_id });
+    if (alreadyFav) {
+      return res.status(409).json({ ok: false, error: 'El recurso ya está en favoritos' });
+    }
 
-    return res.status(201).json({
+    const newFavourite = await addFavourite({ user_id, resource_id });
+
+    res.status(201).json({ ok: true, data: newFavourite });
+  } catch (error) {
+    console.error('Error al añadir favorito:', error);
+    res.status(500).json({ ok: false, error: 'Error al añadir favorito' });
+  }
+};
+
+
+// CONTROLLER: 2. Obtener todos los favoritos de un usuario
+const getFavouritesByUserIdController = async (req, res) => {
+  const { user_id } = req.params;
+
+  try {
+    const favourites = await getFavouritesByUser(user_id);
+
+    return res.status(200).json({
       success: true,
-      message: "Recurso añadido a favoritos correctamente",
-      data: newFavourite,
+      message: "Favoritos obtenidos correctamente",
+      data: favourites,
     });
   } catch (error) {
-    console.error("Error al añadir favorito:", error);
+    console.error("Error al obtener favoritos del usuario:", error);
     return res.status(500).json({
       success: false,
-      message: "Hubo un error al añadir a favoritos",
+      message: "Hubo un error al obtener los favoritos",
     });
   }
 };
 
-// CONTROLLER: 2. Eliminar un favorito por su ID
+// CONTROLLER: 3. Eliminar un favorito por su ID
 const deleteFavouriteByIdController = async (req, res) => {
   const { id } = req.params;
 
@@ -92,28 +108,8 @@ const deleteFavouriteByUserAndResourceController = async (req, res) => {
   }
 };
 
-// CONTROLLER: 4. Obtener todos los favoritos de un usuario
-const getFavouritesByUserIdController = async (req, res) => {
-  const { user_id } = req.params;
 
-  try {
-    const favourites = await getFavouritesByUserId(user_id);
-
-    return res.status(200).json({
-      success: true,
-      message: "Favoritos obtenidos correctamente",
-      data: favourites,
-    });
-  } catch (error) {
-    console.error("Error al obtener favoritos del usuario:", error);
-    return res.status(500).json({
-      success: false,
-      message: "Hubo un error al obtener los favoritos",
-    });
-  }
-};
-
-// CONTROLLER: 5. Comprobar si un recurso está en favoritos de un usuario
+// CONTROLLER: 4. Comprobar si un recurso está en favoritos de un usuario
 const isFavouriteController = async (req, res) => {
   const { user_id, resource_id } = req.params;
 
