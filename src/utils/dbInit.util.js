@@ -34,7 +34,7 @@ const dbInit = async () => {
                 title TEXT NOT NULL,
                 description TEXT,
                 links TEXT[],
-                private BOOLEAN DEFAULT FALSE,
+                public BOOLEAN DEFAULT FALSE,
                 date TIMESTAMP DEFAULT NOW()
             );
         `);    
@@ -68,14 +68,14 @@ const dbInit = async () => {
 
             //Insertar Recursos:
         const resResources = await dbQuery(`
-            INSERT INTO resources (user_id, image, tags, title, description, links, private)
+            INSERT INTO resources (user_id, image, tags, title, description, links, public)
                 VALUES
-                    ($1, 'default.png', ARRAY['testing','image'], 'Title Card 1', 'Description of card 1 for testing', ARRAY['https://nodejs.org'], false),
-                    ($1, 'default.png', ARRAY['testing'], 'Title Card 2', 'Description of card 2 for testing', ARRAY['https://expressjs.com'], true),
-                    ($1, 'default.png', ARRAY['testing','image'], 'Title Card 3', 'Description of card 3 for testing', ARRAY['https://nodejs.org'], false),
-                    ($1, 'default.png', ARRAY['testing'], 'Title Card 4', 'Description of card 4 for testing', ARRAY['https://expressjs.com'], true),
-                    ($1, 'default.png', ARRAY['testing','image'], 'Title Card 5', 'Description of card 5 for testing', ARRAY['https://nodejs.org'], false),
-                    ($1, 'default.png', ARRAY['testing'], 'Title Card 6', 'Description of card 6 for testing', ARRAY['https://expressjs.com'], true)
+                    ($1, 'https://i.pinimg.com/736x/28/a8/a4/28a8a4a286a76717dbebd4dd3ea744bb.jpg', ARRAY['testing','image'], 'Title Card 1', 'Description of card 1 for testing', ARRAY['https://nodejs.org'], false),
+                    ($1, 'https://i.pinimg.com/736x/28/a8/a4/28a8a4a286a76717dbebd4dd3ea744bb.jpg', ARRAY['testing'], 'Title Card 2', 'Description of card 2 for testing', ARRAY['https://expressjs.com'], true),
+                    ($1, 'https://i.pinimg.com/736x/28/a8/a4/28a8a4a286a76717dbebd4dd3ea744bb.jpg', ARRAY['testing','image'], 'Title Card 3', 'Description of card 3 for testing', ARRAY['https://nodejs.org'], false),
+                    ($1, 'https://i.pinimg.com/736x/28/a8/a4/28a8a4a286a76717dbebd4dd3ea744bb.jpg', ARRAY['testing'], 'Title Card 4', 'Description of card 4 for testing', ARRAY['https://expressjs.com'], true),
+                    ($1, 'https://i.pinimg.com/736x/28/a8/a4/28a8a4a286a76717dbebd4dd3ea744bb.jpg', ARRAY['testing','image'], 'Title Card 5', 'Description of card 5 for testing', ARRAY['https://nodejs.org'], false),
+                    ($1, 'https://i.pinimg.com/736x/28/a8/a4/28a8a4a286a76717dbebd4dd3ea744bb.jpg', ARRAY['testing'], 'Title Card 6', 'Description of card 6 for testing', ARRAY['https://expressjs.com'], true)
                 RETURNING resource_id;`
         , [user0Id]);
 

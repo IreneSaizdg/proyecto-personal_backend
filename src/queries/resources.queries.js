@@ -1,17 +1,18 @@
 // QUERIES: recursos
 const resourceQueries = {
-    // QUERIE: 1. Obtener todos los recursos
+    // QUERIE: 1. Obtener todos los recursos (incluyendo username)
     getAll: `
-        SELECT * 
-        FROM resources 
-        ORDER BY date DESC;
+        SELECT resources.*, users.name AS username
+        FROM resources
+        JOIN users ON resources.user_id = users.user_id
+        ORDER BY resources.date DESC;
     `,
 
     // QUERIE: 2. Obtener recursos públicos
     findPublic: `
         SELECT * 
         FROM resources 
-        WHERE private = FALSE 
+        WHERE public = TRUE 
         ORDER BY date DESC;
     `,
 
