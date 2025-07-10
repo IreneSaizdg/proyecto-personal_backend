@@ -41,6 +41,13 @@ const userQueries = {
         WHERE user_id = $6
         RETURNING user_id, name, email, role, privileges;
     `,
+
+    // QUERIE: 6. Obtener usuario por email
+    getUserByEmail: `
+        SELECT user_id, name, email, role, privileges
+        FROM users
+        WHERE email = $1;
+    `,
 };
 
 

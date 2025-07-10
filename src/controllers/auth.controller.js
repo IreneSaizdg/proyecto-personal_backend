@@ -1,7 +1,7 @@
 // IMPORTS
 const bcrypt = require("bcryptjs")
 const userModel = require("../models/user.model");
-const { generateJWT } = require("../utils/JWTgenerate")
+const { generateJWT } = require("../utils/JWTgenerate");
 
 
 

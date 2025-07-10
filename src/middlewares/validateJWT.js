@@ -1,0 +1,36 @@
+const { verifyJWT } = require("../utils/JWTverify")
+const { generateJWT } = require("../utils/JWTgenerate")
+
+
+// MIDDLEWARE: validar JWT (json web token)
+const validateJWT = async (req, res, next) => {
+    const authorization = req.header('authorization');
+    if (!authorization) {
+        return res.status(404).json({
+            ok: false,
+            msg: "no contiene autorización"
+        });
+    }
+    const token = authorization.split(" ")[1];
+    try {
+        const playLoad = await verifyJWT(token);
+        const renewedToken = await generateJWT({
+            uid: playLoad.uid,
+            email: playLoad.email,
+            role: playLoad.role
+        });
+        req.tokenEmail = playLoad.email;
+        req.role = playLoad.role;
+        req.renewedToken = renewedToken;
+        next();
+
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({
+            ok: false,
+            msg: error
+        });
+    }
+}
+
+module.exports = validateJWT

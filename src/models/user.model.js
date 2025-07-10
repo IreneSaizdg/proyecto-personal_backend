@@ -26,7 +26,7 @@ async function deleteUserById(userId) {
 }
 
 
-// 4. Ver usuario por ID
+// 4. Obtener usuario por ID
 async function getUserById(userId) {
     const { rows } = await dbConnection.query(userQueries.getUserById, [userId]);
     return rows[0];
@@ -41,6 +41,12 @@ async function updateUserById({ name, email, password, role = "user", privileges
 }
 
 
+// 6. Obtener usuario por Email
+async function getUserByEmail(email) {
+    const { rows } = await dbConnection.query(userQueries.getUserByEmail, [email]);
+    return rows[0];
+}
+
 
 
 // EXPORTS
@@ -50,4 +56,5 @@ module.exports = {
   getAllUsers,
   updateUserById,
   deleteUserById,
+  getUserByEmail
 }

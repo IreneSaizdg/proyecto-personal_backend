@@ -4,7 +4,8 @@ const {
   getUserById,
   createUser,
   updateUserById,
-  deleteUserById
+  deleteUserById,
+  getUserByEmail
 } = require("../models/user.model");
 
 
@@ -50,14 +51,14 @@ const deleteUserByIdController = async (req, res, next) => {
 };
 
 
-// CONTROLLER: 4. Ver un usuario por ID 
+// CONTROLLER: 4. Obtener usuario por ID 
 const getUserByIdController = async (req, res, next) => {
   try {
     const { id } = req.params;
     const user = await getUserById(id);
 
     if (!user) {
-      return res.status(404).json({ error: "Usuario no encontrado" });
+      return res.status(404).json({ message: "Usuario no encontrado" });
     }
 
     res.status(200).json(user);
@@ -65,7 +66,6 @@ const getUserByIdController = async (req, res, next) => {
     next(error);
   }
 };
-
 
 
 // CONTROLLER: 5. Editar un usuario por ID
@@ -104,6 +104,21 @@ const putUserByIdController = async (req, res, next) => {
 };
 
 
+// CONTROLER: 6. Obtener usuario por Email
+const getUserByEmailController = async (req, res, next) => {
+  try {
+    const { email } = req.params;
+    const user = await getUserByEmail(email);
+
+    if (!user) {
+      return res.status(404).json({ message: "Usuario no encontrado" });
+    }
+
+    res.status(200).json(user);
+  } catch (error) {
+    next(error);
+  }
+};
 
 
 // EXPORTS
@@ -113,4 +128,5 @@ module.exports = {
   getUserByIdController,
   putUserByIdController,
   deleteUserByIdController,
+  getUserByEmailController
 };

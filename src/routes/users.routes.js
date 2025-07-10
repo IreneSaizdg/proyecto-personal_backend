@@ -6,7 +6,8 @@ const {
     getUsersController,
     getUserByIdController,
     putUserByIdController,
-    deleteUserByIdController,   
+    deleteUserByIdController,
+    getUserByEmailController   
 } = require('../controllers/users.controller');
 
 
@@ -23,13 +24,17 @@ router.get('/', getUsersController);
 // DELETE: http://localhost:5000/api/v1/users
 router.delete('/:id', deleteUserByIdController);
 
-// RUTA: 4. Ver usuario por ID (perfil de usuario autenticado)
+// RUTA: 4. Obtener usuario por ID (perfil de usuario autenticado)
 // GET: http://localhost:5000/api/v1/users/1
 router.get('/:id', getUserByIdController);
 
 // RUTA: 5. Editar usuario por ID (perfil usuario autenticado)
 // PUT: http://localhost:5000/api/v1/users/5
 router.put('/:user_id', putUserByIdController);
+
+// RUTA: 5. Obtener usuario por email (perfil usuario autenticado)
+// // GET: http://localhost:5000/api/v1/users/email
+router.put('/:email', getUserByEmailController);
 
 
 
