@@ -44,7 +44,7 @@ const userQueries = {
 
     // QUERIE: 6. Obtener usuario por email
     getUserByEmail: `
-        SELECT user_id, name, email, role, privileges
+        SELECT user_id, name, email, role, privileges, password
         FROM users
         WHERE email = $1;
     `,

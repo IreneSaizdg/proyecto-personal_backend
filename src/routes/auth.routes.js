@@ -2,15 +2,8 @@
 const express = require('express');
 const router = express.Router();
 const { validateInput, validateJWT, validateRole} = require("../middlewares/index")
-const { login, registry, renewToken } = require("../controllers/auth.controller");
+const { login, registry, renewToken, logout } = require("../controllers/auth.controller");
 
-
-
-// ROUTE: login
-// POST http://localhost:5000/api/v1/auth/login
-router.post("/login", [
-    validateInput
-], login)
 
 
 // ROUTE: register
@@ -20,6 +13,13 @@ router.post("/register", [
 ], registry)
 
 
+// ROUTE: login
+// POST http://localhost:5000/api/v1/auth/login
+router.post("/login", [
+    validateInput
+], login)
+
+
 // ROUTE: renewtoken
 // GET http://localhost:5000/api/v1/auth/renewtoken
 router.get("/renewToken", [
@@ -27,12 +27,18 @@ router.get("/renewToken", [
 ], renewToken)
 
 
-// ROUTE: validate admin
-// POST http://localhost:5000/api/v1/auth/validate-admin-role
-router.get("/validate-admin-role", [
-    validateJWT,
-    validateRole("Admin")
-], login)
+// ROUTE: logout
+// GET http://localhost:5000/api/v1/auth/logout
+router.get("/logout", logout);
+
+
+// // ROUTE: validate admin role
+// // GET http://localhost:5000/api/v1/auth/private
+// router.get("/private", [
+//     validateJWT,
+//     validateRole("Admin")
+// ], login)
+
 
 
 module.exports = router;
