@@ -75,12 +75,13 @@ const login = async (req, res) => {
         }
 
         console.log("📥 password recibido:", password);
-console.log("🧑‍💻 user:", user);
-console.log("🔐 user.password:", user?.password);
+        console.log("🧑‍💻 user:", user);
+        console.log("🔐 user.password:", user?.password);
 
-if (!user?.password || !password) {
-  return res.status(400).json({ error: "Faltan datos para comprobar la contraseña." });
-}
+        if (!user?.password || !password) {
+        return res.status(400).json({ error: "Faltan datos para comprobar la contraseña." });
+        }
+        
         //3. Si sí existe comparar contraseña con bcrypt
         const passwordMatch = await bcrypt.compare(password, user.password);
         if (!passwordMatch) {
