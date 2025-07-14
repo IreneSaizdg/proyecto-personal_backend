@@ -1,22 +1,22 @@
 // IMPORTS
 const express = require('express');
 const router = express.Router();
-const { validateInput, validateJWT, validateRole} = require("../middlewares/index")
 const { login, registry, renewToken, logout } = require("../controllers/auth.controller");
-
+const { validateInput, validateJWT, validateRole} = require("../middlewares/index")
+const { validateAuth } = require("../middlewares/validators");
 
 
 // ROUTE: register
 // POST http://localhost:5000/api/v1/auth/register
 router.post("/register", [
-    validateInput
+    ...validateAuth, validateInput
 ], registry)
 
 
 // ROUTE: login
 // POST http://localhost:5000/api/v1/auth/login
 router.post("/login", [
-    validateInput
+    ...validateAuth, validateInput
 ], login)
 
 
