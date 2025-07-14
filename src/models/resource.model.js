@@ -2,6 +2,7 @@
 const dbConnection = require('../utils/dbConnection.util');
 const { dbQuery } = require('../utils/dbQuery.util')
 const {
+    findResourceById,
     insertResource,
     updateById,
     deleteById,
@@ -15,7 +16,7 @@ const {
 
 // 0. Obtener recurso por ID (necesario para comprobar propiedad)
 async function getResourceById(resourceId) {
-  const { rows } = await dbConnection.query(findById, [resourceId]);
+  const { rows } = await dbConnection.query(findResourceById, [resourceId]);
   return rows[0];
 }
 
@@ -80,8 +81,8 @@ async function deleteResourceById(resourceId) {
 
 // EXPORTS
 module.exports = {
-  getAllResources,
   getResourceById,
+  getAllResources,
   getResourcesByUserId,
   getPublicResources,
   getResourcesByTag,

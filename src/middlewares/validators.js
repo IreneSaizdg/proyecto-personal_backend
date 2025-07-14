@@ -33,7 +33,31 @@ const validateResource = [
 ];
 
 
+// VALIDACIONES: USER (crear o editar usuario)
+const validateUser = [
+  check("username")
+    .notEmpty().withMessage("El nombre de usuario es obligatorio")
+    .isLength({ min: 3 }).withMessage("Debe tener al menos 3 caracteres"),
+
+  check("email")
+    .notEmpty().withMessage("El email es obligatorio")
+    .isEmail().withMessage("Debe tener formato de email"),
+
+  check("password")
+    .notEmpty().withMessage("La contraseña es obligatoria")
+    .isLength({ min: 6 }).withMessage("Debe tener al menos 6 caracteres")
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{6,}$/)
+    .withMessage("Debe tener al menos una mayúscula, una minúscula y un número"),
+
+  check("role")
+    .optional()
+    .isIn(["User", "Admin"]).withMessage("El rol debe ser 'User' o 'Admin'"),
+];
+
+
+
 module.exports = {
   validateAuth,
   validateResource,
+  validateUser
 };

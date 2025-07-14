@@ -7,10 +7,24 @@ const {
   getResourcesByTag,
   createResource,
   updateResourceById,
-  deleteResourceById
+  deleteResourceById,
 } = require('../models/resource.model');
 
 
+// CONTROLLER: 0. Obtener recurso por id
+const getResourceByIdController = async (_req, res) => {
+  try {
+    const { resource_id } = _req.params; //Extraemos el id de la ruta
+    const resource = await getResourceById(resource_id);
+    if (!resource) {
+      return res.status(404).json({ message: 'Recurso no encontrado' });
+    }
+    res.status(200).json(resource);
+  } catch (error) {
+    console.error('Error al obtener recurso:', error);
+    res.status(500).json({ message: 'Error interno del servidor' });
+  }
+};
 
 // CONTROLLER: 1. Obtener todos los recursos
 const getAllResourcesController = async (_req, res) => {
@@ -133,6 +147,7 @@ const deleteResourceByIdController = async (req, res) => {
 
 //EXPORTS
 module.exports = {
+  getResourceByIdController,
   createResourceController,
   updateResourceByIdController,
   deleteResourceByIdController,

@@ -1,5 +1,14 @@
 // QUERIES: recursos
 const resourceQueries = {
+
+    // QUERIE: 1. Obtener recurso por ID 
+    findResourceById: `
+        SELECT resources.*, users.name AS username
+        FROM resources
+        JOIN users ON resources.user_id = users.user_id
+        WHERE resources.resource_id = $1;
+    `,
+
     // QUERIE: 1. Obtener todos los recursos (incluyendo username)
     getAll: `
         SELECT resources.*, users.name AS username

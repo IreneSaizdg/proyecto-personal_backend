@@ -1,3 +1,4 @@
+// PROVISIONAL: Igual no se usa...
 // MIDDLEWARE: validar role
 const validateRole = (...roles) => {
     return (req, res, next) => {

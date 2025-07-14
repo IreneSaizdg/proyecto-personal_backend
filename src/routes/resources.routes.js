@@ -1,16 +1,20 @@
 const express = require('express');
 const router = express.Router();
 const {
+    getResourceByIdController,
     getAllResourcesController,
     getPublicResourcesController,
     getResourcesByUserIdController,
     searchResourcesByTagController,
     createResourceController,
     updateResourceByIdController,
-    deleteResourceByIdController
+    deleteResourceByIdController,
 } = require('../controllers/resources.controller');
 
 
+// RUTA: 0. Obtener recurso por id
+// GET http://localhost:5000/api/v1/resources/1
+router.get('/:resource_id', getResourceByIdController);
 
 // RUTA: 1. Obtener todos los recursos 
 // GET http://localhost:5000/api/v1/resources
