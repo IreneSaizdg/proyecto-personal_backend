@@ -48,7 +48,7 @@ const resourceQueries = {
     // QUERIE: 5. Crear recurso
     insertResource: `
         INSERT INTO resources 
-        (user_id, tags, image, title, description, links, private)
+        (user_id, tags, image, title, description, links, public)
         VALUES ($1, $2, $3, $4, $5, $6, $7)
         RETURNING *;
     `,
@@ -61,7 +61,7 @@ const resourceQueries = {
             title = $3,
             description = $4,
             links = $5,
-            private = $6
+            public = $6
         WHERE resource_id = $7
         RETURNING *;
     `,

@@ -33,8 +33,8 @@ router.get("/logout", logout);
 
 
 // // ROUTE: validate admin role
-// // GET http://localhost:5000/api/v1/auth/private
-// router.get("/private", [
+// // GET http://localhost:5000/api/v1/auth/public
+// router.get("/public", [
 //     validateJWT,
 //     validateRole("Admin")
 // ], login)

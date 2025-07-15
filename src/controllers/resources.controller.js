@@ -102,10 +102,10 @@ const updateResourceByIdController = async (req, res) => {
       return res.status(400).json({ ok: false, error: "ID de recurso inválido" });
     }
 
-    const { tags, image, title, description, links, private: isPrivate, } = req.body;
+    const { tags, image, title, description, links, public: ispublic, } = req.body;
 
     const updatedResource = await updateResourceById({
-      resource_id, tags, image, title, description, links, private: isPrivate,
+      resource_id, tags, image, title, description, links, public: ispublic,
     });
 
     if (!updatedResource) {

@@ -56,16 +56,16 @@ async function getResourcesByTag(tag) {
 
 
 // 5. Crear un nuevo recurso
-async function createResource({ user_id, tags, image, title, description, links, private: isPrivate }) {
-    const values = [user_id, tags, image, title, description, links, isPrivate];
+async function createResource({ user_id, tags, image, title, description, links, public: ispublic }) {
+    const values = [user_id, tags, image, title, description, links, ispublic];
     const result = await dbQuery(insertResource, values);
     return result.rows[0]; //Devuelve el recurso recién creado
 }
 
 
 // 6. Editar un recurso por ID
-async function updateResourceById({ tags, image, title, description, links, private: isPrivate, resource_id }) {
-  const values = [tags, image, title, description, links, isPrivate, resource_id];
+async function updateResourceById({ tags, image, title, description, links, public: ispublic, resource_id }) {
+  const values = [tags, image, title, description, links, ispublic, resource_id];
   const result = await dbQuery(updateById, values);
   return result.rows[0] || null;
 }
